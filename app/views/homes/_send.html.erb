@@ -1,0 +1,10 @@
+<%= form_tag "/send", id: 'data-input',
+											authenticity_token: true,
+											remote: true  do %>
+ <div class="control has-icons-left">
+	<input class="input" type="text" name="message">
+  <span class="icon is-small is-left">
+    <i class="fas fa-terminal"></i>
+  </span>
+ </div>
+ <% end %>

@@ -1,0 +1,12 @@
+development:
+  adapter: redis
+  url: redis://localhost:6379/4
+  channel_prefix: anycable
+
+test:
+  adapter: async
+
+production:
+  adapter: redis
+  url: redis://localhost:6379/1
+  channel_prefix: cable-app_production

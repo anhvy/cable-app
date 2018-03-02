@@ -1,0 +1,63 @@
+<section style="margin-top: 50px;">
+	<div class="column is-half is-offset-one-quarter is-vcentered">
+		<div class="panel">
+			<div class="panel-heading">
+				<div class="level">
+					<div class="level-left">
+						<div class="level-item">
+							Send/Receive Websocket with AnyCable
+						</div>
+					</div>
+					<div class="level-right">
+						<div class="level-item connection-status">
+						  <span class="icon is-small is-left has-text-danger">
+						    <i class="fas fa-wifi"></i>
+						  </span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel-block" style="min-height: 100px;">
+				<%= render 'homes/receive' %>
+			</div>
+			<div class="panel-block">
+				<%= render 'homes/send' %>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<script>
+	(function() {
+	  this.App || (this.App = {});
+
+	  App.cable = ActionCable.createConsumer();
+
+	}).call(this);
+	App.cable.subscriptions.create({channel: 'TickerChannel'}, {
+		connected: function() {
+			console.log('connected');
+			$('.connection-status span').removeClass('has-text-danger')
+											 						.addClass('has-text-success')
+		},
+		disconnect: function() {
+			$('.connection-status span').removeClass('has-text-success')
+											 						.addClass('has-text-danger')
+		},
+		received: function(data) {
+			var template = '<p><span>' + data.time + '</span> _ ' + data.message + '</p>';
+			$('.received-content').append(template);
+			$('#data-input').find('input').val(null);
+		}
+	});
+</script>
+
+<style>
+	#data-input	{
+		width: 100%;
+	}
+	#received-content span {
+		font-family: 'Roboto Mono', monospace;
+	}
+</style>
